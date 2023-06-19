@@ -1,0 +1,27 @@
+{
+  "name": "create-js-lib",
+  "version": "0.0.1",
+  "description": "A template that can be used by npx to handle the boilerplate of creating a new JS library",
+  "main": "index.js",
+  "bin": {
+    "create-js-lib": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndersonSMed/js-lib-template.git"
+  },
+  "keywords": [
+    "npx",
+    "template",
+    "boilerplate",
+    "lib",
+    "library",
+    "js"
+  ],
+  "author": "Anderson Medeiros",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AndersonSMed/js-lib-template/issues"
+  },
+  "homepage": "https://github.com/AndersonSMed/js-lib-template#readme"
+}
