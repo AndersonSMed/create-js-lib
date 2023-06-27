@@ -4,11 +4,11 @@
   "description": "A template that can be used by npx to handle the boilerplate of creating a new JS library",
   "main": "index.js",
   "bin": {
-    "create-js-lib": "./index.js"
+    "create-js-lib": "./main.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndersonSMed/js-lib-template.git"
+    "url": "git+https://github.com/AndersonSMed/create-js-lib.git"
   },
   "keywords": [
     "npx",
