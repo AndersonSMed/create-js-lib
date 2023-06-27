@@ -1,0 +1,48 @@
+{
+  "name": "my-webpack-library",
+  "version": "0.0.2",
+  "description": "My webpack library",
+  "main": "lib/main.js",
+  "scripts": {
+    "lint": "eslint ./src",
+    "lint:fix": "eslint --fix ./src",
+    "test": "echo \"no test found\"",
+    "prepublishOnly": "npm run build",
+    "postinstall": "husky install",
+    "build:dev": "webpack --mode=development --watch --config webpack.config.js",
+    "build": "webpack --mode=production --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/your-project.git"
+  },
+  "keywords": [
+    "node",
+    "javascript",
+    "example"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.22.1",
+    "@babel/preset-env": "^7.22.4",
+    "@webpack-cli/generators": "^3.0.7",
+    "babel-loader": "^9.1.2",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "prettier": "^2.8.8",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "browserslist": [
+    "> 0.2%",
+    "not op_mini all",
+    "not dead"
+  ],
+  "homepage": "https://github.com/your-username/your-project#readme"
+}
