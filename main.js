@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const colors = require("@colors/colors/safe");
 const prompt = require("prompt");
 const nunjucks = require("nunjucks");
