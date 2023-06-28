@@ -8,6 +8,8 @@ const fse = require("fs-extra");
 const path = require("path");
 const spawn = require("cross-spawn");
 
+const templateDir = path.join(__dirname, "template");
+
 const dottedFilesAndFolders = [
   "babelrc",
   "eslintrc.json",
@@ -74,55 +76,45 @@ prompt.get(schema, (err, result) => {
 
   console.log(colors.white("\nCreating boilerplate..."));
 
-  getAllFilesFromDirectory().forEach((filePath) => {
-    const newFilePath = /template.*/
-      .exec(filePath)[0]
-      .replace("template", result.name);
+  const projectDir = path.join(__dirname, result.name);
 
-    fse.outputFileSync(
-      path.join(__dirname, newFilePath),
-      nunjucks.render(filePath, result)
-    );
+  fs.cpSync(templateDir, projectDir, { recursive: true });
+
+  getAllFilesFromDirectory(projectDir).forEach((filePath) => {
+    fse.outputFileSync(filePath, nunjucks.render(filePath, result));
   });
 
-  addDotToFilesAndFolders(result.name)
+  addDotToFilesAndFolders(result.name);
 
   console.log(colors.white("\nInstalling dependencies...\n"));
 
   spawn.sync("git", ["init"], {
     stdio: "ignore",
-    cwd: path.join(__dirname, result.name),
+    cwd: projectDir,
   });
 
   spawn.sync("npm", ["install"], {
     stdio: "inherit",
-    cwd: path.join(__dirname, result.name),
+    cwd: projectDir,
   });
 
-  console.log(
-    colors.white(
-      `\nLib created successfully on ${path.join(__dirname, result.name)}.\n`
-    )
-  );
+  console.log(colors.white(`\nLib created successfully on ${projectDir}.\n`));
 });
 
-function addDotToFilesAndFolders(libName) {
-  const directory = path.join(__dirname, libName);
-  const files = fs.readdirSync(directory);
+function addDotToFilesAndFolders(projectDir) {
+  const files = fs.readdirSync(projectDir);
 
   files.forEach((fileName) => {
     if (dottedFilesAndFolders.includes(fileName)) {
       fs.renameSync(
-        path.join(directory, fileName),
-        path.join(directory, `.${fileName}`)
+        path.join(projectDir, fileName),
+        path.join(projectDir, `.${fileName}`)
       );
     }
   });
 }
 
-function getAllFilesFromDirectory(
-  currentDirectory = path.join(__dirname, "template")
-) {
+function getAllFilesFromDirectory(currentDirectory) {
   const files = fs.readdirSync(currentDirectory);
 
   const filePaths = files.map((file) => {
