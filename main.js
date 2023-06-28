@@ -1,3 +1,109 @@
-// TODO: Init git repository
-// TODO: Use template
-console.info("Hello world")
+const colors = require("@colors/colors/safe");
+const prompt = require("prompt");
+const nunjucks = require("nunjucks");
+const fs = require("fs");
+const fse = require("fs-extra");
+const path = require("path");
+const spawn = require("cross-spawn");
+
+const schema = {
+  properties: {
+    name: {
+      description: colors.white("lib name"),
+      type: "string",
+      pattern: /^\S+$/,
+      message: "lib name cannot contain whitespaces or be empty",
+      required: true,
+    },
+    version: {
+      description: colors.white("initial version"),
+      type: "string",
+      pattern: /^\d+\.\d+\.\d+$/,
+      message: "enter a valid version",
+      default: "0.0.1",
+    },
+    description: {
+      description: colors.white("description"),
+      type: "string",
+    },
+    gitRepositoryUrl: {
+      description: colors.white("git repository url"),
+      type: "string",
+      pattern: /^https?:\/\/[^\s/$.?#].[^\s]*$/,
+      message: "enter a valid repository url",
+    },
+    keywords: {
+      description: colors.white("keywords"),
+      type: "string",
+    },
+    author: {
+      description: colors.white("author"),
+      type: "string",
+    },
+  },
+};
+
+prompt.message = "";
+
+prompt.delimiter = colors.white(":");
+
+prompt.start();
+
+console.log(
+  colors.white("This utility will walk you through creating a new lib")
+);
+console.log(
+  colors.white(
+    "It will ask you some questions and use them to build the boilerplate\n"
+  )
+);
+
+prompt.get(schema, (err, result) => {
+  if (err) throw new Error(err);
+
+  console.log(colors.white("\nCreating boilerplate..."));
+
+  getAllFilesFromDirectory().forEach((filePath) => {
+    const newFilePath = /template.*/
+      .exec(filePath)[0]
+      .replace("template", result.name);
+    fse.outputFileSync(
+      path.join(__dirname, newFilePath),
+      nunjucks.render(filePath, result)
+    );
+  });
+
+  console.log(
+    colors.white("\nInstalling dependencies...\n")
+  );
+
+  spawn.sync("git", ["init"], {
+    stdio: "ignore",
+    cwd: path.join(__dirname, result.name),
+  });
+
+  spawn.sync("npm", ["install"], {
+    stdio: "inherit",
+    cwd: path.join(__dirname, result.name),
+  });
+
+  console.log(
+    colors.white(
+      `\nLib created successfully on ${path.join(__dirname, result.name)}.\n`
+    )
+  );
+});
+
+function getAllFilesFromDirectory(
+  currentDirectory = path.join(__dirname, "template")
+) {
+  const files = fs.readdirSync(currentDirectory);
+
+  const filePaths = files.map((file) => {
+    const filePath = path.join(currentDirectory, file);
+    const stat = fs.statSync(filePath);
+    return stat.isDirectory() ? getAllFilesFromDirectory(filePath) : filePath;
+  });
+
+  return Array.prototype.concat(...filePaths);
+}

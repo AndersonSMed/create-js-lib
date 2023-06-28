@@ -1,6 +1,6 @@
 {
   "name": "my-webpack-library",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "My webpack library",
   "main": "lib/main.js",
   "scripts": {
