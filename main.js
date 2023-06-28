@@ -8,6 +8,15 @@ const fse = require("fs-extra");
 const path = require("path");
 const spawn = require("cross-spawn");
 
+const dottedFilesAndFolders = [
+  "babelrc",
+  "eslintrc.json",
+  "gitignore",
+  "prettierrc",
+  "husky",
+  "vscode",
+];
+
 const schema = {
   properties: {
     name: {
@@ -69,15 +78,16 @@ prompt.get(schema, (err, result) => {
     const newFilePath = /template.*/
       .exec(filePath)[0]
       .replace("template", result.name);
+
     fse.outputFileSync(
       path.join(__dirname, newFilePath),
       nunjucks.render(filePath, result)
     );
   });
 
-  console.log(
-    colors.white("\nInstalling dependencies...\n")
-  );
+  addDotToFilesAndFolders(result.name)
+
+  console.log(colors.white("\nInstalling dependencies...\n"));
 
   spawn.sync("git", ["init"], {
     stdio: "ignore",
@@ -95,6 +105,20 @@ prompt.get(schema, (err, result) => {
     )
   );
 });
+
+function addDotToFilesAndFolders(libName) {
+  const directory = path.join(__dirname, libName);
+  const files = fs.readdirSync(directory);
+
+  files.forEach((fileName) => {
+    if (dottedFilesAndFolders.includes(fileName)) {
+      fs.renameSync(
+        path.join(directory, fileName),
+        path.join(directory, `.${fileName}`)
+      );
+    }
+  });
+}
 
 function getAllFilesFromDirectory(
   currentDirectory = path.join(__dirname, "template")
