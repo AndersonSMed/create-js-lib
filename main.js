@@ -76,7 +76,7 @@ prompt.get(schema, (err, result) => {
 
   console.log(colors.white("\nCreating boilerplate..."));
 
-  const projectDir = path.join(__dirname, result.name);
+  const projectDir = path.join(process.cwd(), result.name);
 
   fs.cpSync(templateDir, projectDir, { recursive: true });
 
