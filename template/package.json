@@ -1,8 +1,8 @@
 {
-  "name": "{{ name }}",
-  "version": "{{ version }}",
+  "name": "{{ name | safe }}",
+  "version": "{{ version | safe }}",
   {%- if description %}
-  "description": "{{ description }}",
+  "description": "{{ description | safe }}",
   {%- endif %}
   "main": "lib/main.js",
   "scripts": {
@@ -11,18 +11,18 @@
     "test": "echo \"no test found\"",
     "prepublishOnly": "npm run build",
     "postinstall": "husky install",
-    "build:dev": "webpack --mode=development --watch --config webpack.config.js",
+    "dev": "npm link && webpack --mode=development --watch --config webpack.config.js",
     "build": "webpack --mode=production --config webpack.config.js"
   },
   {%- if repositoryUrl %}
   "repository": {
     "type": "git",
-    "url": "git+{{ repositoryUrl }}.git"
+    "url": "git+{{ repositoryUrl | safe }}.git"
   },
   "bugs": {
-    "url": "{{ repositoryUrl }}/issues"
+    "url": "{{ repositoryUrl | safe }}/issues"
   },
-  "homepage": "{{ repositoryUrl }}#readme",
+  "homepage": "{{ repositoryUrl | safe }}#readme",
   {%- endif %}
   {%- if keywords %}
   "keywords": [
@@ -30,7 +30,7 @@
   ],
   {%- endif %}
   {%- if author %}
-  "author": "{{ author }}",
+  "author": "{{ author | safe }}",
   {%- endif %}
   "license": "MIT",
   "devDependencies": {

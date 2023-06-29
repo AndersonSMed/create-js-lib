@@ -4,14 +4,14 @@ const path = require('path');
  * @type {import('webpack').Configuration}
  */
 module.exports = {
-  entry: path.resolve(__dirname, 'src', 'index.js'),
+  entry: path.resolve(__dirname, 'src', 'main.js'),
   output: {
     path: path.resolve(__dirname, 'lib'),
     filename: 'main.js',
     clean: true,
     globalObject: 'this',
     library: {
-      name: '{{ pascalCasedName }}',
+      name: '{{ pascalCasedName | safe }}',
       type: 'umd',
     },
   },

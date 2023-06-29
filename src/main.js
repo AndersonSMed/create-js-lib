@@ -7,8 +7,9 @@ const fs = require("fs");
 const fse = require("fs-extra");
 const path = require("path");
 const spawn = require("cross-spawn");
+const commandExistsSync = require("command-exists").sync;
 
-const templateDir = path.join(__dirname, "template");
+const templateDir = path.join(__dirname, "..", "template");
 
 const dottedFilesAndFolders = [
   "babelrc",
@@ -25,14 +26,14 @@ const schema = {
       description: colors.white("lib name"),
       type: "string",
       pattern: /^\S+$/,
-      message: "lib name cannot contain whitespaces or be empty",
+      message: "provide a valid name without any empty spaces",
       required: true,
     },
     version: {
       description: colors.white("initial version"),
       type: "string",
       pattern: /^\d+\.\d+\.\d+$/,
-      message: "enter a valid version",
+      message: "provide a valid version",
       default: "0.0.1",
     },
     description: {
@@ -43,7 +44,7 @@ const schema = {
       description: colors.white("git repository url"),
       type: "string",
       pattern: /^https?:\/\/[^\s/$.?#].[^\s]*$/,
-      message: "enter a valid repository url",
+      message: "provide a valid repository url",
     },
     keywords: {
       description: colors.white("keywords"),
@@ -52,6 +53,12 @@ const schema = {
     author: {
       description: colors.white("author"),
       type: "string",
+    },
+    packageManager: {
+      description: colors.white("install dependencies with npm or yarn"),
+      type: "string",
+      required: true,
+      default: "npm",
     },
   },
 };
@@ -73,6 +80,16 @@ console.log(
 
 prompt.get(schema, (err, result) => {
   if (err) throw new Error(err);
+
+  if (!commandExistsSync("git"))
+    throw new Error(
+      `The command git doesn't exist on PATH, install it end try again`
+    );
+
+  if (!commandExistsSync(result.packageManager))
+    throw new Error(
+      `The command ${result.packageManager} doesn't exist on PATH, install it end try again`
+    );
 
   console.log(colors.white("\nCreating boilerplate..."));
 
@@ -96,7 +113,7 @@ prompt.get(schema, (err, result) => {
     cwd: projectDir,
   });
 
-  spawn.sync("npm", ["install"], {
+  spawn.sync(result.packageManager, ["install"], {
     stdio: "inherit",
     cwd: projectDir,
   });
