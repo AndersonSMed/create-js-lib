@@ -1,7 +1,9 @@
 {
-  "name": "my-webpack-library",
-  "version": "0.0.1",
-  "description": "My webpack library",
+  "name": "{{ name }}",
+  "version": "{{ version }}",
+  {%- if description %}
+  "description": "{{ description }}",
+  {%- endif %}
   "main": "lib/main.js",
   "scripts": {
     "lint": "eslint ./src",
@@ -12,16 +14,24 @@
     "build:dev": "webpack --mode=development --watch --config webpack.config.js",
     "build": "webpack --mode=production --config webpack.config.js"
   },
+  {%- if repositoryUrl %}
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/your-project.git"
+    "url": "git+{{ repositoryUrl }}.git"
   },
+  "bugs": {
+    "url": "{{ repositoryUrl }}/issues"
+  },
+  "homepage": "{{ repositoryUrl }}#readme",
+  {%- endif %}
+  {%- if keywords %}
   "keywords": [
-    "node",
-    "javascript",
-    "example"
+    {{ keywords | join(",\n") | safe | indent(4) }}
   ],
-  "author": "Your Name",
+  {%- endif %}
+  {%- if author %}
+  "author": "{{ author }}",
+  {%- endif %}
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.22.1",
@@ -36,13 +46,9 @@
     "webpack": "^5.88.0",
     "webpack-cli": "^5.1.4"
   },
-  "engines": {
-    "node": ">=18"
-  },
   "browserslist": [
     "> 0.2%",
     "not op_mini all",
     "not dead"
-  ],
-  "homepage": "https://github.com/your-username/your-project#readme"
+  ]
 }

@@ -11,7 +11,7 @@ module.exports = {
     clean: true,
     globalObject: 'this',
     library: {
-      name: 'my-webpack-library',
+      name: '{{ pascalCasedName }}',
       type: 'umd',
     },
   },

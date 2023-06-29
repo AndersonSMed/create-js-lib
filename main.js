@@ -39,7 +39,7 @@ const schema = {
       description: colors.white("description"),
       type: "string",
     },
-    gitRepositoryUrl: {
+    repositoryUrl: {
       description: colors.white("git repository url"),
       type: "string",
       pattern: /^https?:\/\/[^\s/$.?#].[^\s]*$/,
@@ -81,7 +81,10 @@ prompt.get(schema, (err, result) => {
   fs.cpSync(templateDir, projectDir, { recursive: true });
 
   getAllFilesFromDirectory(projectDir).forEach((filePath) => {
-    fse.outputFileSync(filePath, nunjucks.render(filePath, result));
+    fse.outputFileSync(
+      filePath,
+      nunjucks.render(filePath, transformResultForRender(result))
+    );
   });
 
   addDotToFilesAndFolders(result.name);
@@ -124,4 +127,19 @@ function getAllFilesFromDirectory(currentDirectory) {
   });
 
   return Array.prototype.concat(...filePaths);
+}
+
+function transformResultForRender(result) {
+  return {
+    ...result,
+    keywords: result.keywords
+      ? result.keywords.split(",").map((keyword) => `"${keyword.trim()}"`)
+      : undefined,
+    pascalCasedName: result.name
+      .split("-")
+      .map((w) => w.split("_"))
+      .flat()
+      .map((w) => (w ? `${w[0].toUpperCase()}${w.slice(1)}` : w))
+      .join(""),
+  };
 }
