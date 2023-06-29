@@ -1,6 +1,6 @@
 {
   "name": "@andersonsmed/create-js-lib",
-  "version": "0.0.1-beta",
+  "version": "0.0.1-beta.1",
   "description": "A template that can be used by npx to handle the boilerplate of creating a new JS library",
   "bin": {
     "create-js-lib": "./src/main.js"
