@@ -4,7 +4,7 @@
   {%- if description %}
   "description": "{{ description | safe }}",
   {%- endif %}
-  "main": "lib/main.js",
+  "main": "lib/index.js",
   "scripts": {
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",

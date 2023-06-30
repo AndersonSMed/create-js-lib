@@ -6,7 +6,7 @@ Following is a list with all the basic info that you might want know about.
 
 ## Before start coding
 
-The entry point for your lib is the `src/main.js` file, so you can update it as your will.
+The entry point for your lib is the `src/index.js` file, so you can update it as your will.
 
 This lib comes with [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) configured so you can have static validation and enforced code style by default. You can change it's configurations at any time by changing the `.eslintrc.json` and `.prettierrc` files.
 

@@ -4,10 +4,11 @@ const path = require('path');
  * @type {import('webpack').Configuration}
  */
 module.exports = {
-  entry: path.resolve(__dirname, 'src', 'main.js'),
+  entry: path.resolve(__dirname, 'src', 'index.js'),
+  devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'lib'),
-    filename: 'main.js',
+    filename: 'index.js',
     clean: true,
     globalObject: 'this',
     library: {

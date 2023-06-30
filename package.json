@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "Setup a JS lib by using a command",
   "bin": {
-    "create-js-lib": "./src/main.js"
+    "create-js-lib": "./src/index.js"
   },
   "repository": {
     "type": "git",
