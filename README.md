@@ -31,9 +31,9 @@ Create JS lib depends on some external commands and might fail if they are not a
 
 Following is a list with all the external dependencies with guides on how to install each one of them:
 
-- GIT - https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-- NPM (if you choose to install packages using npm) - https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
-- YARN (if you choose to install packages using yarn) - https://classic.yarnpkg.com/lang/en/docs/install/
+- [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (if you choose to install packages using npm)
+- [YARN](https://classic.yarnpkg.com/lang/en/docs/install/) (if you choose to install packages using yarn)
 
 ## License
 

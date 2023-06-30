@@ -11,7 +11,7 @@
     "test": "echo \"no test found\"",
     "prepublishOnly": "npm run build",
     "postinstall": "husky install",
-    "dev": "npm link && webpack --mode=development --watch --config webpack.config.js",
+    "dev": "concurrently \"npm link\" \"webpack --mode=development --watch --config webpack.config.js\"",
     "build": "webpack --mode=production --config webpack.config.js"
   },
   {%- if repositoryUrl %}
@@ -38,6 +38,7 @@
     "@babel/preset-env": "^7.22.4",
     "@webpack-cli/generators": "^3.0.7",
     "babel-loader": "^9.1.2",
+    "concurrently": "^8.2.0",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
