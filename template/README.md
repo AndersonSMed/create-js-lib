@@ -18,11 +18,13 @@ Also, just after the first time you do a `npm install`, some [git hooks](https:/
 During the setup, a `git init` command is executed just after the lib is created.
 
 So, in order to sync your lib with a remote repository, you just need to run the following commands in your terminal:
+> The `repository_url` should be replaced by a URL that looks like `git@github.com:user/repository.git`
 ```
 git branch -M main
-git remote add origin <repository_url>
+git remote add origin repository_url
 git push -u origin main
 ```
+
 
 ## Releasing a new version
 
