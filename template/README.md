@@ -20,6 +20,8 @@ During the setup, a `git init` command is executed just after the lib is created
 So, in order to sync your lib with a remote repository, you just need to run the following commands in your terminal:
 > The `repository_url` should be replaced by a URL that looks like `git@github.com:user/repository.git`
 ```
+git add .
+git commit -m "Initial project"
 git branch -M main
 git remote add origin repository_url
 git push -u origin main
