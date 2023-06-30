@@ -15,6 +15,9 @@
     "build": "webpack --mode=production --config webpack.config.js"
   },
   {%- if repositoryUrl %}
+  "files": [
+    "./lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+{{ repositoryUrl | safe }}.git"
