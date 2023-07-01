@@ -19,7 +19,7 @@
   {%- if repositoryUrl %}
   "repository": {
     "type": "git",
-    "url": "git+{{ repositoryUrl | safe }}.git"
+    "url": "{{ repositoryUrl | safe }}"
   },
   "bugs": {
     "url": "{{ repositoryUrl | safe }}/issues"
