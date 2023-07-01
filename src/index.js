@@ -118,6 +118,11 @@ prompt.get(schema, (err, result) => {
     cwd: projectDir,
   });
 
+  spawn.sync("npx", ["husky", "install"], {
+    stdio: "inherit",
+    cwd: projectDir,
+  })
+
   console.log(colors.white(`\nLib created successfully on ${projectDir}.\n`));
 });
 

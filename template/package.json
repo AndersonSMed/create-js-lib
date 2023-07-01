@@ -10,14 +10,13 @@
     "lint:fix": "eslint --fix ./src",
     "test": "echo \"no test found\"",
     "prepublishOnly": "npm run build",
-    "postinstall": "husky install",
     "dev": "concurrently \"npm link\" \"webpack --mode=development --watch --config webpack.config.js\"",
     "build": "webpack --mode=production --config webpack.config.js"
   },
-  {%- if repositoryUrl %}
   "files": [
     "./lib"
   ],
+  {%- if repositoryUrl %}
   "repository": {
     "type": "git",
     "url": "git+{{ repositoryUrl | safe }}.git"

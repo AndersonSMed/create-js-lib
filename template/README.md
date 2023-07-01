@@ -10,7 +10,7 @@ The entry point for your lib is the `src/index.js` file, so you can update it as
 
 This lib comes with [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) configured so you can have static validation and enforced code style by default. You can change it's configurations at any time by changing the `.eslintrc.json` and `.prettierrc` files.
 
-Also, just after the first time you do a `npm install`, some [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) will be installed by using [Husky](https://www.npmjs.com/package/husky). They will be useful to running some validations just before a new commit is created.
+Also, this lib comes with some [git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) installed by default, managed by [Husky](https://www.npmjs.com/package/husky). They will be useful to running some validations just before a new commit is created.
 
 ## How to sync with a remote repository
 > These steps must be done only once after the lib is created
@@ -56,7 +56,6 @@ This lib comes with some useful scripts in the `package.json` file. Following is
 | `lint:fix`        | Runs ESLint with the `--fix` flag to automatically fix linting errors in the `./src` directory.              |
 | `test`            | Echoes the message "no test found". This script is a placeholder and doesn't run any actual tests.   |
 | `prepublishOnly`  | Runs the `build` script before publishing the lib to a registry.                                                      |
-| `postinstall`     | Installs Husky hooks just after the dependencies are installed.                                        |
 | `build`           | Creates a production build of the lib inside the `/lib` directory.                   |
 | `dev`             | Creates a development build of the lib in watch mode and runs `npm link` to test it locally.    |
 
