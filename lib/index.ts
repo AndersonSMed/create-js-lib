@@ -47,7 +47,9 @@ const schema: prompt.Schema = {
       message: 'provide a valid repository url',
     },
     keywords: {
-      description: colors.white('keywords'),
+      description: colors.white(
+        'keywords (use comma `,` to separate keywords)'
+      ),
       type: 'string',
     },
     author: {
@@ -55,7 +57,7 @@ const schema: prompt.Schema = {
       type: 'string',
     },
     packageManager: {
-      description: colors.white('install dependencies with npm or yarn'),
+      description: colors.white('which dependency manager should it use?'),
       type: 'string',
       required: true,
       default: 'npm',
