@@ -1,6 +1,6 @@
 {
   "name": "@andersonsmed/create-js-lib",
-  "version": "0.0.7",
+  "version": "0.0.8-alpha",
   "description": "Setup a JS lib by using a command",
   "bin": {
     "create-js-lib": "./dist/index.js"
