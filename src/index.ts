@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
-const colors = require('@colors/colors/safe');
-const prompt = require('prompt');
-const nunjucks = require('nunjucks');
-const fs = require('fs');
-const fse = require('fs-extra');
-const path = require('path');
-const spawn = require('cross-spawn');
-
-const commandExistsSync = require('command-exists').sync;
+import colors from '@colors/colors/safe';
+import prompt from 'prompt';
+import nunjucks from 'nunjucks';
+import fs from 'fs';
+import fse from 'fs-extra';
+import path from 'path';
+import spawn from 'cross-spawn';
+import { sync as commandExistsSync } from 'command-exists';
 
 const templateDir = path.join(__dirname, '..', 'template');
 
@@ -21,7 +20,7 @@ const dottedFilesAndFolders = [
   'vscode',
 ];
 
-const schema = {
+const schema: prompt.Schema = {
   properties: {
     name: {
       description: colors.white('lib name'),
@@ -80,21 +79,21 @@ console.log(
 );
 
 prompt.get(schema, (err, result) => {
-  if (err) throw new Error(err);
+  if (err) throw new Error(err.message);
 
   if (!commandExistsSync('git'))
     throw new Error(
       `The command git doesn't exist on PATH, install it end try again`
     );
 
-  if (!commandExistsSync(result.packageManager))
+  if (!commandExistsSync(result.packageManager.toString()))
     throw new Error(
       `The command ${result.packageManager} doesn't exist on PATH, install it end try again`
     );
 
   console.log(colors.white('\nCreating boilerplate...'));
 
-  const projectDir = path.join(process.cwd(), result.name);
+  const projectDir = path.join(process.cwd(), result.name.toString());
 
   fs.cpSync(templateDir, projectDir, { recursive: true });
 
@@ -105,7 +104,7 @@ prompt.get(schema, (err, result) => {
     );
   });
 
-  addDotToFilesAndFolders(result.name);
+  addDotToFilesAndFolders(result.name.toString());
 
   console.log(colors.white('\nInstalling dependencies...\n'));
 
@@ -114,7 +113,7 @@ prompt.get(schema, (err, result) => {
     cwd: projectDir,
   });
 
-  spawn.sync(result.packageManager, ['install'], {
+  spawn.sync(result.packageManager.toString(), ['install'], {
     stdio: 'inherit',
     cwd: projectDir,
   });
@@ -127,7 +126,7 @@ prompt.get(schema, (err, result) => {
   console.log(colors.white(`\nLib created successfully on ${projectDir}.\n`));
 });
 
-function addDotToFilesAndFolders(projectDir) {
+function addDotToFilesAndFolders(projectDir: string) {
   const files = fs.readdirSync(projectDir);
 
   files.forEach((fileName) => {
@@ -140,7 +139,7 @@ function addDotToFilesAndFolders(projectDir) {
   });
 }
 
-function getAllFilesFromDirectory(currentDirectory) {
+function getAllFilesFromDirectory(currentDirectory: string): string[] {
   const files = fs.readdirSync(currentDirectory);
 
   const filePaths = files.map((file) => {
@@ -152,13 +151,19 @@ function getAllFilesFromDirectory(currentDirectory) {
   return Array.prototype.concat(...filePaths);
 }
 
-function transformResultForRender(result) {
+function transformResultForRender<
+  T extends Record<string, string | prompt.RevalidatorSchema>,
+>(result: T) {
   return {
     ...result,
     keywords: result.keywords
-      ? result.keywords.split(',').map((keyword) => `"${keyword.trim()}"`)
+      ? result.keywords
+          .toString()
+          .split(',')
+          .map((keyword) => `"${keyword.trim()}"`)
       : undefined,
     pascalCasedName: result.name
+      .toString()
       .split('-')
       .map((w) => w.split('_'))
       .flat()

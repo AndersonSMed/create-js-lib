@@ -3,7 +3,7 @@
   "version": "0.0.7",
   "description": "Setup a JS lib by using a command",
   "bin": {
-    "create-js-lib": "./src/index.js"
+    "create-js-lib": "./dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -35,15 +35,25 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
+    "@types/command-exists": "^1.2.1",
+    "@types/cross-spawn": "^6.0.3",
+    "@types/fs-extra": "^11.0.2",
+    "@types/node": "^20.8.0",
+    "@types/nunjucks": "^3.2.4",
+    "@types/prompt": "^1.1.6",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "husky": "^8.0.3",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
   },
   "scripts": {
     "prepare": "husky install",
     "lint": "eslint ./src",
-    "lint:fix": "eslint --fix ./src"
+    "lint:fix": "eslint --fix ./src",
+    "build": "tsc"
   }
 }
